@@ -1,0 +1,81 @@
+{% include 'header.html' %}
+
+<!-- ======= Services Section ======= --><br><br><br>
+    <section id="service" class="services-mf route">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="title-box text-center">
+              <h3 class="title-a">
+                Friends
+              </h3>
+              <p class="subtitle-a">
+                Connect with your Friends.
+              </p>
+              <div class="line-mf"></div>
+            </div>
+          </div>
+        </div>
+        {% if ln==1 %}
+    <h2 align="center">You don't have any friends</h2>
+    <br>
+    {% else %}
+        <div class="row">
+                      {%for frds in frds %}
+          <div class="col-md-4">
+            <div class="service-box">
+              <div align="center" class="service-ico">
+                {%if frds['propic']=='pending'%}
+                        {%if frds['gender']=='Male'%}
+                        <img src="../static/propic/male.jpg" class="img-fluid rounded b-shadow-a" alt="Profile Photo">
+                        {%else%}
+                        <img src="../static/propic/female.jpg" class="img-fluid rounded b-shadow-a" alt="Profile Photo">
+                        {%endif%}
+                        {%else%}
+                        <img src="../static/propic/{{frds['propic']}}" class="img-fluid rounded b-shadow-a" alt="Profile Photo">
+                        {%endif%}
+              </div>
+              <div align="center" class="service-content">
+                <h2 class="s-title">{{frds['name']}}</h2>
+                <p class="s-description text-center">
+                 Gender :{{frds['gender']}}<br>
+                 {%if frds['status']=='friend'%}
+                 <p class="s-description text-center">
+                 {% if m==frds['month(profile.dob)'] and d==frds['day(profile.dob)'] %}
+                 Age :{{y-frds['year(profile.dob)']}}<br>
+                          {% elif m==frds['month(profile.dob)'] and d>frds['day(profile.dob)'] %}
+                 Age :{{y-frds['year(profile.dob)']}}<br>
+                          {% elif m==frds['month(profile.dob)'] and d< frds['day(profile.dob)'] %}
+                 Age :{{y-frds['year(profile.dob)']-1}}<br>
+                          {% elif (m-frds['month(profile.dob)'])<0 %}
+                 Age :{{(y-frds['year(profile.dob)'])-1}}<br>
+                          {% elif (m-frds['month(profile.dob)'])>0 %}
+                 Age :{{y-frds['year(profile.dob)']}}<br>
+                          {% endif %}         
+                 {% endif %}
+                 <p class="s-description text-center">
+                 Bio :{{frds['bio']}}<br><br>
+                    {%if frds['status']=='pending' and frds['mid']==session['lid'] %}
+                  <a href="/unfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button " value="Cancel Request"></a>
+                    {%elif frds['status']=='pending' and frds['uid']==session['lid']%}  
+                      <a href="/acptfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button-a " value="Accept Request"></a>
+                      <a href="/unfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button " value="Cancel Request"></a>{%elif frds['status']=='friend' and frds['uid']==session['lid'] or frds['mid']==session['lid'] %}
+                            <button class="button button-a">
+                  <a href="#?uid={{frds['lid']}}"><i class="fa fa-comments"> Chat</i></a></button><br><br>
+                  <a href="/unfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button " value="Unfriend"></a>
+                  {%else%}          
+                <a href="/frds?uid={{frds['lid']}}">
+                            <input type="button" class="button button-a " value="AddFriend"></a>
+                  {%endif%}
+              </div>
+            </div>
+          </div>
+                        {%endfor%}{%endif%}
+    </section>
+        <center><a href="/allfriends">Find more friends</a></center><br>
+<!-- End Services Section -->
+{% include 'footer.html' %}

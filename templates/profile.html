@@ -1,0 +1,210 @@
+{% include 'header.html' %}
+<style>
+* {box-sizing: border-box;}
+
+.container {
+  position: relative;
+  width: 50%;
+  max-width: 300px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1; 
+  width: 50%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 1px;
+  text-align: center;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+</style>
+<script type="text/javascript">
+  function myFunction()
+  {
+  var psd = prompt("Enter current Password", " ");
+  if (psd != null) 
+  {
+    window.location='/cgpsd?psd='+psd;
+  }
+  else
+  {
+    alert("Cancelled");window.location='/profile'
+  }
+}
+</script>
+<script type='text/javascript'>
+function preview_image(event) 
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+function btn()
+{
+  document.getElementById("btn").style.display="inline";
+}
+function bios()
+{
+  document.getElementById('bio').style.display="none";
+  document.getElementById('ebio').style.display="none";
+  document.getElementById('bio1').style.display="inline"
+}
+</script>
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<main id="main">
+  <section id="about" class="about-mf sect-pt4 route">
+       <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="title-box text-center">
+              <h3 class="title-a">
+                Profile
+              </h3>
+              <p class="subtitle-a">
+                Simple and Humble Profile
+              </p>
+              <div class="line-mf"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+   <section id="about" class="about-mf sect-pt route">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="box-shadow-full">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5">
+                      <div class="about-img">
+                        {%if res['propic']=='pending'%}
+                        {%if res['gender']=='Male'%}
+                        <label for="fileToUpload">
+                          <div class="container">
+                        <img src="../static/propic/male.jpg" id="output_image" class="img-fluid rounded b-shadow-a" alt="Profile Photo" title="Click to update photo" onclick="btn();" class="image">
+                         <div class="overlay" onclick="btn();">Edit <i class="fa fa-edit"></i></div></div>
+                        </label>
+                        {%else%}
+                        <label for="fileToUpload">
+                           <div class="container">
+                        <img src="../static/propic/female.jpg" id="output_image" class="img-fluid rounded b-shadow-a" alt="Profile Photo" title="Click to update photo" onclick="btn();" class="image">
+                        <div class="overlay" onclick="btn();">Edit <i class="fa fa-edit"></i></div></div>
+                        </label>
+                        {%endif%}
+                        {%else%}
+                        <label for="fileToUpload">
+                           <div class="container">
+                        <img src="../static/propic/{{res['propic']}}" id="output_image" class="img-fluid rounded b-shadow-a" alt="Profile Photo" title="Click to update photo" onclick="btn();" class="image">
+                        <div class="overlay" onclick="btn();">Edit <i class="fa fa-edit"></i></div></div>
+                        {%endif%}
+                        </label>
+                        <form enctype="multipart/form-data" method="post" action="/updatepic">
+                            <div id="dp" align="center" class="form-group">
+                              {%if res['propic']=='pending'%}
+                              <div id="btn" style="display: none;">
+                            <button type="submit" class="button button-a "> Update Photo</button>
+                          </div>
+                            {%else%}
+                            <div id="btn" style="display: none;">
+                            <button type="submit" class="button button-a "> Update Photo</button>
+                            </div>
+                            </div><div align="center">
+                            <a href="/dltpic">
+                            <input type="button" class="button button " value="Remove Photo"></a>
+                            {%endif%}
+                            <div id="dp1" class="custom-file mb-3" style="display: none;">
+                              <input type="file" class="custom-file-input" name="img" id="fileToUpload" required="required" accept="image/*" onchange="preview_image(event)">
+                              <label class="custom-file-label" for="customFile"><i class="fa fa-edit" title="Click to update photo">Change Profile Photo </i></label>
+                            </div>
+                            <script>
+                            // Add the following code if you want the name of the file appear on select
+                            $(".custom-file-input").on("change", function() {
+                              var fileName = $(this).val().split("\\").pop();
+                              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                            });
+                            </script>
+                            <center><p><span><h3>{{res['name']}}</h3></span></p></center>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                    <div class="col-sm-6 col-md-7">
+                      <div class="skill-mf">
+                    <p class="title-s"><div class="title-box-2">
+                      <h5 class="title-left">
+                        About
+                      </h5>
+                    </div>
+                  </p></div>
+                      <div class="about-info">
+                        <p><span class="title-s">Gender: </span> <span>{{res['gender']}}</span></p>
+                        <p><span class="title-s">DOB: </span> <span>{{res['dob']}}</span></p>
+                        <p><span class="title-s">Mobile: </span> <span>{{res['mobil']}}</span></p>
+                        <p><span class="title-s">Email: </span> <span>{{res['email']}}</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="about-me pt-4 pt-md-0">
+                  <div class="skill-mf">
+                    <p class="title-s"><div class="title-box-2">
+                      <h6 class="title-left">
+                        Bio
+                      </h6>
+                    </div>
+                    <div id="bio" style="display: inline;">
+                      <span>{{res['bio']}}</span>
+                    </div>
+                    <div id="bio1" style="display: none;">
+                        <form enctype="multipart/form-data" method="post" action="/updatebio">         
+                          <div class="col-md-12">
+                            <div class="row form-group">
+                              <textarea class="form-control" name="about" rows="4" cols="55" data-rule="required" data-msg="Please write something for your friends" placeholder="Say something about yourself">{{res['bio']}}</textarea>
+                              <div class="validate"></div>
+                              <button type="submit" class="button button-a "> Update</button>
+                            </div>
+                          </div>
+                        </div>
+                   <div>
+                    <div id="ebio" style="display: inline;">
+                    <br><a onclick="bios();" style="color: blue;" title="Edit Bio">Edit Bio <i class="fa fa-edit"></i><br>
+                        </div>
+                    <a onclick="myFunction();" style="color: blue;" title="Change Password">Change Password?</a>
+                            </form>
+                  </div>
+                </div>
+                    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End About Section -->
+    {% include 'footer.html' %}
+

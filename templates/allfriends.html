@@ -1,0 +1,59 @@
+{% include 'header.html' %}
+
+<!-- ======= Services Section ======= --><br><br><br>
+    <section id="service" class="services-mf route">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="title-box text-center">
+              <h3 class="title-a">
+                People
+              </h3>
+              <p class="subtitle-a">
+                Find Your Friends.
+              </p>
+              <div class="line-mf"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+                      {%for frds in frds %}
+          <div class="col-md-4">
+            <div class="service-box">
+              <div align="center" class="service-ico">
+                {%if frds['propic']=='pending'%}
+                        {%if frds['gender']=='Male'%}
+                        <img src="../static/propic/male.jpg" class="img-fluid rounded b-shadow-a" alt="Profile Photo">
+                        {%else%}
+                        <img src="../static/propic/female.jpg" class="img-fluid rounded b-shadow-a" alt="Profile Photo">
+                        {%endif%}
+                        {%else%}
+                        <img src="../static/propic/{{frds['propic']}}" class="img-fluid rounded b-shadow-a" alt="Profile Photo">
+                        {%endif%}
+              </div>
+              <div align="center" class="service-content">
+                <h2 class="s-title">{{frds['name']}}</h2>
+                <p class="s-description text-center">
+                 Gender :{{frds['gender']}}<br>
+                 <p class="s-description text-center">
+                 Bio :{{frds['bio']}}<br><br>
+                    {%if frds['status']=='pending' and frds['mid']==session['lid'] %}
+                  <a href="/unfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button " value="Cancel Request"></a>
+                    {%elif frds['status']=='pending' and frds['uid']==session['lid']%}  
+                      <a href="/acptfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button-a " value="Accept Request"></a>
+                      <a href="/unfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button " value="Cancel Request"></a>{%elif frds['status']=='friend' and frds['uid']==session['lid'] or frds['mid']==session['lid'] %}
+                  <a href="/unfrds?uid={{frds['lid']}}">
+                            <input type="button" class="button button " value="Unfriend"></a>
+                  {%else%}          
+                <a href="/frds?uid={{frds['lid']}}">
+                            <input type="button" class="button button-a " value="AddFriend"></a>
+                  {%endif%}
+              </div>
+            </div>
+          </div>
+                        {%endfor%}
+    </section><!-- End Services Section -->
+{% include 'footer.html' %}

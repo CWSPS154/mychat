@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Regester</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="../../static/login/images/icons/reg1.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/login/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="../../static/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../../static/login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="../../static/login/css/main.css">
+<!--===============================================================================================-->
+<script>
+function valid()
+
+{
+    var flag=true;
+
+    if((document.getElementById("mob").value).length==0)
+    {
+                    flag=true;
+    }
+    else if((document.getElementById("mob").value).length!=10)
+    {
+    	       		flag=false;
+                    alert("Enter 10 digit number");
+                    window.location="/register";
+    }
+    if (document.getElementById('pass').value !=document.getElementById('repass').value) 
+    {
+    	 flag=false;
+                    alert("Password is not matching");
+                    window.location="/register"
+    }
+      return flag;
+}
+var check = function() {
+  if (document.getElementById('pass').value ==
+    document.getElementById('repass').value) {
+    document.getElementById('message').style.color = 'orange';
+    document.getElementById('message').innerHTML = 'Matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'Not matching';
+  } 
+}
+var len =function()
+{
+if ((document.getElementById('pass').value).length<8)
+{
+	document.getElementById('alert').style.color = 'red';
+    document.getElementById('alert').innerHTML = 'Minimum 8 Character required';	
+} 
+else if ((document.getElementById('pass').value).length==8)
+{
+	document.getElementById('alert').style.color = 'yellow';
+    document.getElementById('alert').innerHTML = 'Weak';
+}
+else if ((document.getElementById('pass').value).length>10)
+{
+	document.getElementById('alert').style.color = 'orange';
+    document.getElementById('alert').innerHTML = 'Strong';
+}
+}
+var num =function()
+{
+if ((document.getElementById('mob').value).length==10)
+{
+	document.getElementById('mo').style.color = 'orange';
+    document.getElementById('mo').innerHTML = 'Valid';
+}
+else
+{
+	document.getElementById('mo').style.color = 'red';
+    document.getElementById('mo').innerHTML = '10 digit number is required';
+}
+}
+</script>
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">				
+
+				<form class="login100-form validate-form" action="/register" method="post">
+					<span class="login100-form-title">
+					Create Your Account
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Name is required">
+						<input class="input100" type="text" name="name" placeholder="Name">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div align="center" class="wrap-input100 validate-input" data-validate = "Select your gender please:">
+						<input type="radio" id="male" name="gender" value="Male" title="Select your gender please" required>
+						  <label for="male">Male</label>
+						  <input type="radio" id="female" name="gender" value="Female" title="Select your gender please" required>
+						  <label for="female">Female</label>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Select your date of birth">
+						<input class="input100" type="date" name="dob" placeholder="DOB">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+						</span>
+					</div>
+					<span id='mo'></span> 
+					<div class="wrap-input100 validate-input" data-validate = "Valid number is required">
+						<input class="input100" type="mobile" name="mob" id="mob" placeholder="Mobile" onkeyup='num();'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-phone" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required">
+						<input class="input100" type="email" name="email" id="email" placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+
+					<div class="wrap-input100 validate-input" data-validate = "Say about yourself:">
+						<textarea class="input100" name="bio" placeholder="BIO"></textarea>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</span>
+					</div>
+					<span id='alert'></span> 
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" id="pass" placeholder="Password" onkeyup='len();'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					<span id='message'></span> 
+					<div class="wrap-input100 validate-input" data-validate = "Retype Password">
+						<input class="input100" type="password" name="repass" id="repass" placeholder="Retype Password" onkeyup='check();'>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" onclick="return valid()">
+							Sign Up
+						</button>
+					</div>
+
+					<div class="text-center p-t-12">
+						<a class="txt1" href="/">
+							Login
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="../../static/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../../static/login/vendor/bootstrap/js/popper.js"></script>
+	<script src="../../static/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../../static/login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../../static/login/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="../../static/login/js/main.js"></script>
+
+</body>
+</html>
